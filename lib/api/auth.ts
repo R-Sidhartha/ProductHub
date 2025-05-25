@@ -1,4 +1,5 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://producthub-server.onrender.com";
 
 export async function login(email: string, password: string) {
   const res = await fetch(`${BASE_URL}/api/auth/login`, {
