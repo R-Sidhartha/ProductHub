@@ -33,7 +33,7 @@ export default function Page() {
             const result = await login(data.email, data.password);
             localStorage.setItem("token", result.token);
             authLogin();
-            toast.success("Login successful! Redirecting...");
+            toast.success("Login successful!");
             router.push("/");
         } catch (err: any) {
             toast.error(err.message || "Invalid credentials");

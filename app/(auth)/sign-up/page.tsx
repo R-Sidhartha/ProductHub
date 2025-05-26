@@ -33,7 +33,7 @@ export default function Page() {
             const result = await signup(data.email, data.password);
             localStorage.setItem("token", result.token);
             login();
-            toast.success("Signup successful! Redirecting...");
+            toast.success("Signup successful!");
             router.push("/");
         } catch (err: any) {
             toast.error(err.message || "Signup failed. Try again.");
