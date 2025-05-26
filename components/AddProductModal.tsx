@@ -91,6 +91,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ initialData,
                             className="normal-input"
                             placeholder="https://example.com/image.jpg"
                         />
+                        <p className="text-xs text-gray-500 mt-1">
+                            Note: Please upload image URLs only from <a href="https://unsplash.com" target="_blank" className="underline text-purple-600">Unsplash</a>.
+                        </p>
                         {errors.image && <p className="text-sm text-red-500 mt-1">{errors.image.message}</p>}
                     </div>
 
