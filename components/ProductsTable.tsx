@@ -189,7 +189,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, setFilters, set
                                     {product.category}
                                 </span>
                             </td>
-                            <td className="p-3 border border-gray-300">{product.price}</td>
+                            <td className="p-3 border border-gray-300">{product.price} INR</td>
                             <td className="p-3 border border-gray-300">{product.quantity}</td>
                             <td className={`p-3 border border-gray-300 font-semibold ${product.status === 'In Stock' ? 'text-green-600' : 'text-red-500'}`}>
                                 {product.status}

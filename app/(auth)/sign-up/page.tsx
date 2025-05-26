@@ -7,6 +7,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { signup } from "@/lib/api/auth";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from 'sonner';
 
 const signupSchema = z.object({
     email: z.string().email(),
@@ -17,7 +18,6 @@ type SignupData = z.infer<typeof signupSchema>;
 
 export default function Page() {
     const router = useRouter();
-    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
 
@@ -29,14 +29,14 @@ export default function Page() {
 
     const onSubmit = async (data: SignupData) => {
         setLoading(true);
-        setError("");
         try {
             const result = await signup(data.email, data.password);
             localStorage.setItem("token", result.token);
             login();
+            toast.success("Signup successful! Redirecting...");
             router.push("/");
         } catch (err: any) {
-            setError(err.message || "Signup failed. Try again.");
+            toast.error(err.message || "Signup failed. Try again.");
         } finally {
             setLoading(false);
         }
@@ -79,9 +79,6 @@ export default function Page() {
                             <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
                         )}
                     </div>
-
-                    {error && <p className="text-sm text-red-500 text-center">{error}</p>}
-
                     <button
                         type="submit"
                         className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg  hover:bg-transparent hover:border-puprle-600 transition ease-in duration-200 hover:text-purple-600 border border-purple-600 cursor-pointer font-semibold"

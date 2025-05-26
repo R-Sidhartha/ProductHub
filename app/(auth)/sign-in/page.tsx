@@ -7,6 +7,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { login } from "@/lib/api/auth";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from 'sonner';
 
 const loginSchema = z.object({
     email: z.string().email(),
@@ -17,7 +18,6 @@ type LoginData = z.infer<typeof loginSchema>;
 
 export default function Page() {
     const router = useRouter();
-    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const { login: authLogin } = useAuth();
 
@@ -29,14 +29,14 @@ export default function Page() {
 
     const onSubmit = async (data: LoginData) => {
         setLoading(true);
-        setError("");
         try {
             const result = await login(data.email, data.password);
             localStorage.setItem("token", result.token);
             authLogin();
+            toast.success("Login successful! Redirecting...");
             router.push("/");
         } catch (err: any) {
-            setError(err.message || "Invalid credentials");
+            toast.error(err.message || "Invalid credentials");
         } finally {
             setLoading(false);
         }
@@ -73,9 +73,6 @@ export default function Page() {
                         />
                         {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
                     </div>
-
-                    {error && <p className="text-sm text-red-500 text-center">{error}</p>}
-
                     <button
                         type="submit"
                         className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg  hover:bg-transparent hover:border-puprle-600 transition ease-in duration-200 hover:text-purple-600 border border-purple-600 cursor-pointer font-semibold"
